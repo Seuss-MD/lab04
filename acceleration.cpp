@@ -13,9 +13,9 @@
 #include <cmath>
 
 /*********************************************
- * ACCELERATION : ADD
- *  a += a
- *********************************************/
+* ACCELERATION : ADD
+*  a += a
+*********************************************/
 void Acceleration::add(const Acceleration& acceleration)
 {
    ddx = -99.9;
@@ -23,11 +23,12 @@ void Acceleration::add(const Acceleration& acceleration)
 }
 
 /*********************************************
- * ACCELERATION : SET
- *  set from angle and direction
- *********************************************/
+* ACCELERATION : SET
+*  set from angle and direction
+*********************************************/
 void Acceleration::set(const Angle & angle, double magnitude)
 {
-   ddx = -99.9;
-   ddy = -88.8;
+	ddx = -99.9;
+	ddy = -88.8;
 }
+

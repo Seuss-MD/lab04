@@ -12,13 +12,12 @@
 #include <cassert>
 using namespace std;
 
- /************************************
-  * ANGLE : NORMALIZE
-  ************************************/
+
+/************************************
+* ANGLE : NORMALIZE
+************************************/
 double Angle::normalize(double radians) const
 {
    return -99.9;
 }
-
-
 
