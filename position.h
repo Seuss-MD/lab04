@@ -8,6 +8,8 @@
  ************************************************************************/
 
 #pragma once
+#include "velocity.h"
+#include "acceleration.h"
 
 class Velocity;        // for Position::add()
 class Acceleration;    // for Position::add()
@@ -25,13 +27,22 @@ class Position
    
 public:
    // constructors
-   Position()                     : x(0.0), y(0.0) { }
-   Position(const Position & pos) : x(pos.x), y(pos.y) { }
+   Position()                     : x(0.0), y(0.0)       { }
+   Position(const Position & pos) : x(pos.x), y(pos.y)   { }
    Position(double x, double y);
 
    // getters
    double getX() const { return x; }
    double getY() const { return y; }
+
+
+   // setters
+   void setX(double x) { this->x = x; }
+   void setY(double y) { this->y = y; }
+   void addX(double x) { this->x = this->x + x; }
+   void addY(double y) { this->y = this->y + y; }
+   void add(const Acceleration& a, const Velocity& v, double t);
+
    bool operator == (const Position & rhs) const
    {
       return x == rhs.x && y == rhs.y;
@@ -39,17 +50,6 @@ public:
    bool operator != (const Position & rhs) const
    {
       return x != rhs.x || y != rhs.y;
-   }
-
-   // setters
-   void setX(double x) { this->x = x; }
-   void setY(double y) { this->y = y; }
-   void addX(double x) { this->x = this->x + x; }
-   void addY(double y) { this->y = this->y + y; }
-   void add(const Acceleration& a, const Velocity& v, double t)
-   {
-      x = x + v.getDX() * t + 0.5 * a.getDDX() * t * t;
-      y = y + v.getDY() * t + 0.5 * a.getDDY() * t * t;
    }
    Position & operator = (const Position & rhs)
    {
