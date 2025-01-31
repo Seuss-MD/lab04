@@ -28,7 +28,6 @@ public:
    void display();
 
    unsigned char phase;
-private:
    Angle a;
    Ground ground;
    Position posUpperRight;

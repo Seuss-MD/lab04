@@ -6,6 +6,7 @@
  * Summary:
  *    Everything we need to know about a direction
  ************************************************************************/
+
 #pragma once
 
 #define _USE_MATH_DEFINES
@@ -25,30 +26,16 @@ class Angle
 private:
    double radians;   // 360 degrees equals 2 PI radians
 
-   double normalize(double radians) const
-   {
-      while (radians < 0.0)
-      {
-         radians += 2.0 * M_PI;
-      }
-
-      while (radians >= 2.0 * M_PI)
-      {
-         radians -= 2.0 * M_PI;
-      }
-
-      return radians;
-   }
-
+   double normalize(double radians) const;
 
    double convertToRadians(double degrees) const
    {
-      return degrees * (M_PI / 180.0);
+      return degrees / 360.0 * (M_PI * 2);
    }
 
    double convertToDegrees(double radians) const
    {
-      return radians * (180.0 / M_PI);
+      return radians / (M_PI * 2.0) * 360.0;
    }
 
 public:
@@ -58,19 +45,11 @@ public:
    friend TestLander;
 
    // Constructors
-   Angle()
+   Angle() : radians(0.0) {}
+   Angle(const Angle& rhs) : radians(rhs.radians) {}
+   Angle(double degrees) : radians(0.0)
    {
-      radians = 0.0;
-   }
-
-   Angle(const Angle& rhs)
-   {
-      radians = (rhs.radians);
-   }
-
-   Angle(double degrees)
-   {
-      radians = convertToRadians(degrees);
+      setDegrees(degrees);
    }
 
    // Getters
@@ -101,29 +80,28 @@ public:
 
    void setDown()
    {
-      radians = convertToRadians(180);
+      radians = M_PI;
    }
 
    void setRight()
    {
-      radians = convertToRadians(90);
+      radians = M_PI * 0.5;
    }
 
    void setLeft()
    {
-      radians = convertToRadians(270);
+      radians = M_PI * 1.5;
    }
    void reverse()
    {
       radians = normalize(radians + M_PI);
    }
 
-   double add(double delta)
+   Angle& add(double delta)
    {
       radians = normalize(radians + delta);
-      return radians;
+      return *this;
    }
 
 };
-
 

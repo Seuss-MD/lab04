@@ -8,6 +8,9 @@
  ************************************************************************/
 
 #pragma once
+#include <cmath> //for sqrt, sin, cos
+#include "angle.h"
+#include "acceleration.h"
 
 // for unit tests
 class TestPosition;
@@ -32,45 +35,23 @@ class Velocity
    
 public:
    // constructors
-   Velocity()                     : dx(0.0), dy(0.0) { }
-   Velocity(double dx, double dy)
-   {
-      this->dx = dx;
-      this->dy = dy;
-   }
+   Velocity()                     : dx(0.0), dy(0.0)   { }
+   Velocity(double dx, double dy) : dx(dx),  dy(dy)    { }
 
    // getters
-   double getDX()       const { return dx; }
-   double getDY()       const { return dy; }
-   double getSpeed()    const 
-   {
-      return sqrt(dx * dx + dy * dy);
-   }
+   double getDX()       const    { return dx; }
+   double getDY()       const    { return dy; }
+   double getSpeed()    const;
 
    // setters
-   void setDX(double dx) { this->dx = dx; }
-   void setDY(double dy) { this->dy = dy; }
-   void set(const Angle& angle, double magnitude)
-   {
-      //COMPUTE HORIZONTAL COMPONENT
-      //sin(a) = dx / total
-      this->dx = magnitude * sin(angle.getRadians());
-      this->dy = magnitude * cos(angle.getRadians());
-   }
-   void addDX(double dx) 
-   {
-      this->dx = this->dx + dx; 
-   }
-   void addDY(double dy) 
-   {
-      this->dy = this->dy + dy; 
-   }
-   void add(const Acceleration& acceleration, double time)
-   {
-      //v = v0 + a t
-      dx = dx + acceleration.getDDX() * time;
-      dy = dy + acceleration.getDDY() * time;
-   }
+   void setDX(double dx)         { this->dx = dx; }
+   void setDY(double dy)         { this->dy = dy; }
+   void set(const Angle& angle, double magnitude);
+
+   // adding
+   void addDX(double dx)         {this->dx = this->dx + dx;}
+   void addDY(double dy)         {this->dy = this->dy + dy;}
+   void add(const Acceleration& acceleration, double time);
 
 private:
    double dx;           // horizontal velocity
