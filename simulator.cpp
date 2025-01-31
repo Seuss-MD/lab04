@@ -11,6 +11,7 @@
 #include "test.h"        // for the unit tests
 #include <cmath>         // for SQRT
 #include <cassert>       // for ASSERT
+#include <iostream>
 using namespace std;
 
 
@@ -27,8 +28,13 @@ public:
    // display stuff on the screen
    void display();
 
-   unsigned char phase;
+   //turn
+   void turnRight()  { a.add(-0.03); }
+   void turnLeft()   { a.add(0.03); }
+
+
 private:
+   unsigned char phase;
    Angle a;
    Ground ground;
    Position posUpperRight;
@@ -69,9 +75,13 @@ void callBack(const Interface* pUI, void* p)
 
    //// handle input
    if (pUI->isRight())
-      ;   // rotate right here
+   {
+
+      pSimulator->turnRight();   // rotate right here
+      cout << "pressed once" << endl;
+   }
    if (pUI->isLeft())
-      pSimulator->a.setLeft();   // rotate left here
+      pSimulator->turnLeft();   // rotate left here
 
 
 }
