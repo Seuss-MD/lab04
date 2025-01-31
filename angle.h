@@ -11,6 +11,8 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>   // for M_PI which is 3.14159
+#include <iostream>
+using namespace std;
 
 class TestPosition;
 class TestVelocity;
@@ -100,6 +102,7 @@ public:
    Angle& add(double delta)
    {
       radians = normalize(radians + delta);
+      cout << radians << endl;
       return *this;
    }
 
