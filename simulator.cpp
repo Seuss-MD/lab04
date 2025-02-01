@@ -11,9 +11,7 @@
 #include "test.h"        // for the unit tests
 #include <cmath>         // for SQRT
 #include <cassert>       // for ASSERT
-#include <iostream>
 using namespace std;
-
 
 /*************************************************************************
  * SIMULATOR
@@ -22,23 +20,29 @@ using namespace std;
 class Simulator
 {
 public:
-   // set up the simulator
-   Simulator(const Position & posUpperRight) : ground(posUpperRight), posLander(posUpperRight.getX() / 2.0, posUpperRight.getY() / 2.0) {}
+   // set up the simulator and element positions
+   Simulator(const Position & posUpperRight) :
+      ground   (posUpperRight),
+      posLander(posUpperRight.getX() / 2.0, posUpperRight.getY() / 2.0),
+      posStar  (300.0, 300.0) {}
        
    // display stuff on the screen
    void display();
 
-   //turn
-   void turnRight()  { a.add(-0.03); }
-   void turnLeft()   { a.add(0.03); }
+   // turn
+   void turnRight()  { a.add(-0.05); }
+   void turnLeft()   { a.add( 0.05); }
 
+   // blink phase for star
+   void blink() { phase+=10; }
 
 private:
-   unsigned char phase;
+   unsigned char phase = 0;
    Angle a;
    Ground ground;
    Position posUpperRight;
    Position posLander;
+   Position posStar;
 };
 
 /**********************************************************
@@ -56,7 +60,7 @@ void Simulator::display()
    gout.drawLander(posLander, a.getRadians());
 
    // draw a star
-// gout.drawStar(posStar, phase);
+   gout.drawStar(posStar, phase);
 }
 
 
@@ -73,17 +77,14 @@ void callBack(const Interface* pUI, void* p)
    // draw the game
    pSimulator->display();
 
-   //// handle input
+   // handle input
    if (pUI->isRight())
-   {
-
       pSimulator->turnRight();   // rotate right here
-      cout << "pressed once" << endl;
-   }
    if (pUI->isLeft())
       pSimulator->turnLeft();   // rotate left here
 
-
+   // change phase
+   pSimulator->blink();
 }
 
 /*********************************

@@ -53,8 +53,11 @@ public:
    }
    Position & operator = (const Position & rhs)
    {
-      x = 99.9;
-      y = 88.8;
+      if (this != &rhs)
+      {
+         x = rhs.x;
+         y = rhs.y;
+      }
       return *this;
    }
 

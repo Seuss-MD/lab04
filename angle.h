@@ -102,7 +102,6 @@ public:
    Angle& add(double delta)
    {
       radians = normalize(radians + delta);
-      cout << radians << endl;
       return *this;
    }
 
